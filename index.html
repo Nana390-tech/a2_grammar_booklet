@@ -88,6 +88,7 @@
         </div>
 
         <div class="content">
+            <!-- LESSON 1 -->
             <div id="verb-to-be" class="lesson active">
                 <h2 class="lesson-title">Lesson 1: Verb to be</h2>
                 
@@ -188,6 +189,220 @@
 
                     <button class="btn" onclick="checkQuiz()">Submit Quiz</button>
                     <div class="feedback" id="quiz-feedback"></div>
+                </div>
+            </div>
+
+            <!-- LESSON 2 -->
+            <div id="there-is-are" class="lesson">
+                <h2 class="lesson-title">Lesson 2: There is / There are</h2>
+                
+                <div class="grammar-box">
+                    <h3>📌 Positive Form</h3>
+                    <p><strong>There is</strong> → for singular (one thing)</p>
+                    <p><strong>There are</strong> → for plural (two or more things)</p>
+                    <div class="example-box">
+                        <strong>Examples:</strong><br>
+                        • <span class="highlight">There is</span> a book on the table.<br>
+                        • <span class="highlight">There are</span> three students in the class.
+                    </div>
+                </div>
+
+                <div class="grammar-box">
+                    <h3>❌ Negative Form</h3>
+                    <p><strong>There isn't</strong> (is not) any... | <strong>There aren't</strong> (are not) any...</p>
+                    <div class="example-box">
+                        <strong>Examples:</strong><br>
+                        • <span class="highlight">There isn't</span> a pen in my bag.<br>
+                        • <span class="highlight">There aren't</span> any apples.
+                    </div>
+                </div>
+
+                <div class="grammar-box">
+                    <h3>❓ Question Form</h3>
+                    <p><strong>Is there</strong> ...? | <strong>Are there</strong> ...?</p>
+                    <div class="example-box">
+                        <strong>Examples:</strong><br>
+                        • <span class="highlight">Is there</span> a cat under the table?<br>
+                        • <span class="highlight">Are there</span> any books on the shelf?<br>
+                        <strong>Answers:</strong> Yes, there is. / No, there isn't.
+                    </div>
+                </div>
+
+                <div class="exercise-section">
+                    <div class="exercise-title">📝 Practice Exercise</div>
+                    
+                    <div class="question">
+                        <div class="question-text">1. _____ a cat under the table.</div>
+                        <input type="text" id="q2-1">
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">2. _____ five books on the shelf.</div>
+                        <input type="text" id="q2-2">
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">3. _____ any milk in the fridge. (negative)</div>
+                        <input type="text" id="q2-3">
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">4. _____ a park near your house? (question)</div>
+                        <input type="text" id="q2-4">
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">5. _____ any students in the classroom. (negative)</div>
+                        <input type="text" id="q2-5">
+                    </div>
+
+                    <button class="btn btn-check" onclick="checkAnswers2()">Check Answers</button>
+                    <button class="btn" onclick="resetExercise2()">Reset</button>
+                    
+                    <div class="feedback" id="feedback2"></div>
+                </div>
+
+                <div class="mcq-review">
+                    <h3>🎯 Unit Review Quiz</h3>
+                    <p style="text-align: center; margin-bottom: 20px;">Score 60%+ to unlock next lesson!</p>
+
+                    <div class="mcq-question">
+                        <div class="question-text"><strong>1.</strong> Choose: "_____ a dog in the garden."</div>
+                        <label class="radio-option"><input type="radio" name="q2-1" value="a"> There is</label>
+                        <label class="radio-option"><input type="radio" name="q2-1" value="b"> There are</label>
+                    </div>
+
+                    <div class="mcq-question">
+                        <div class="question-text"><strong>2.</strong> Choose: "_____ three apples."</div>
+                        <label class="radio-option"><input type="radio" name="q2-2" value="a"> There is</label>
+                        <label class="radio-option"><input type="radio" name="q2-2" value="b"> There are</label>
+                    </div>
+
+                    <div class="mcq-question">
+                        <div class="question-text"><strong>3.</strong> Negative: "_____ any water."</div>
+                        <label class="radio-option"><input type="radio" name="q2-3" value="a"> There isn't</label>
+                        <label class="radio-option"><input type="radio" name="q2-3" value="b"> There aren't</label>
+                    </div>
+
+                    <div class="mcq-question">
+                        <div class="question-text"><strong>4.</strong> Question: "_____ a bank nearby?"</div>
+                        <label class="radio-option"><input type="radio" name="q2-4" value="a"> Is there</label>
+                        <label class="radio-option"><input type="radio" name="q2-4" value="b"> Are there</label>
+                    </div>
+
+                    <div class="mcq-question">
+                        <div class="question-text"><strong>5.</strong> Choose: "_____ many people here."</div>
+                        <label class="radio-option"><input type="radio" name="q2-5" value="a"> There is</label>
+                        <label class="radio-option"><input type="radio" name="q2-5" value="b"> There are</label>
+                    </div>
+
+                    <button class="btn" onclick="checkQuiz2()">Submit Quiz</button>
+                    <div class="feedback" id="quiz-feedback2"></div>
+                </div>
+            </div>
+
+            <!-- LESSON 3 -->
+            <div id="prepositions" class="lesson">
+                <h2 class="lesson-title">Lesson 3: Prepositions of Place and Time</h2>
+                
+                <div class="grammar-box">
+                    <h3>📍 Prepositions of Place</h3>
+                    <p><strong>in</strong> = inside | <strong>on</strong> = on top of | <strong>at</strong> = specific location</p>
+                    <p><strong>under</strong> = below | <strong>behind</strong> = at the back | <strong>between</strong> = in the middle of two things</p>
+                    <div class="example-box">
+                        <strong>Examples:</strong><br>
+                        • The book is <span class="highlight">in</span> the bag.<br>
+                        • The cup is <span class="highlight">on</span> the table.<br>
+                        • I'm <span class="highlight">at</span> school.
+                    </div>
+                </div>
+
+                <div class="grammar-box">
+                    <h3>⏰ Prepositions of Time</h3>
+                    <p><strong>in</strong> = months, years, seasons | <strong>on</strong> = days, dates | <strong>at</strong> = specific times</p>
+                    <div class="example-box">
+                        <strong>Examples:</strong><br>
+                        • <span class="highlight">In</span> January / <span class="highlight">In</span> 2024<br>
+                        • <span class="highlight">On</span> Monday / <span class="highlight">On</span> May 1st<br>
+                        • <span class="highlight">At</span> 3 o'clock / <span class="highlight">At</span> night
+                    </div>
+                </div>
+
+                <div class="exercise-section">
+                    <div class="exercise-title">📝 Practice Exercise</div>
+                    
+                    <div class="question">
+                        <div class="question-text">1. The book is _____ the table.</div>
+                        <input type="text" id="q3-1">
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">2. I was born _____ December.</div>
+                        <input type="text" id="q3-2">
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">3. The cat is _____ the chair.</div>
+                        <input type="text" id="q3-3">
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">4. The class starts _____ 8 o'clock.</div>
+                        <input type="text" id="q3-4">
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">5. My birthday is _____ Friday.</div>
+                        <input type="text" id="q3-5">
+                    </div>
+
+                    <button class="btn btn-check" onclick="checkAnswers3()">Check Answers</button>
+                    <button class="btn" onclick="resetExercise3()">Reset</button>
+                    
+                    <div class="feedback" id="feedback3"></div>
+                </div>
+
+                <div class="mcq-review">
+                    <h3>🎯 Unit Review Quiz</h3>
+                    <p style="text-align: center; margin-bottom: 20px;">Complete to finish all lessons!</p>
+
+                    <div class="mcq-question">
+                        <div class="question-text"><strong>1.</strong> "The pen is _____ the desk."</div>
+                        <label class="radio-option"><input type="radio" name="q3-1" value="a"> in</label>
+                        <label class="radio-option"><input type="radio" name="q3-1" value="b"> on</label>
+                        <label class="radio-option"><input type="radio" name="q3-1" value="c"> at</label>
+                    </div>
+
+                    <div class="mcq-question">
+                        <div class="question-text"><strong>2.</strong> "I live _____ Dubai."</div>
+                        <label class="radio-option"><input type="radio" name="q3-2" value="a"> in</label>
+                        <label class="radio-option"><input type="radio" name="q3-2" value="b"> on</label>
+                        <label class="radio-option"><input type="radio" name="q3-2" value="c"> at</label>
+                    </div>
+
+                    <div class="mcq-question">
+                        <div class="question-text"><strong>3.</strong> "My exam is _____ Monday."</div>
+                        <label class="radio-option"><input type="radio" name="q3-3" value="a"> in</label>
+                        <label class="radio-option"><input type="radio" name="q3-3" value="b"> on</label>
+                        <label class="radio-option"><input type="radio" name="q3-3" value="c"> at</label>
+                    </div>
+
+                    <div class="mcq-question">
+                        <div class="question-text"><strong>4.</strong> "The meeting is _____ 9:00 AM."</div>
+                        <label class="radio-option"><input type="radio" name="q3-4" value="a"> in</label>
+                        <label class="radio-option"><input type="radio" name="q3-4" value="b"> on</label>
+                        <label class="radio-option"><input type="radio" name="q3-4" value="c"> at</label>
+                    </div>
+
+                    <div class="mcq-question">
+                        <div class="question-text"><strong>5.</strong> "The cat is hiding _____ the bed."</div>
+                        <label class="radio-option"><input type="radio" name="q3-5" value="a"> under</label>
+                        <label class="radio-option"><input type="radio" name="q3-5" value="b"> on</label>
+                        <label class="radio-option"><input type="radio" name="q3-5" value="c"> at</label>
+                    </div>
+
+                    <button class="btn" onclick="checkQuiz3()">Submit Quiz</button>
+                    <div class="feedback" id="quiz-feedback3"></div>
                 </div>
             </div>
         </div>
@@ -324,6 +539,196 @@
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             tab.classList.add('active');
+        }
+
+        // LESSON 2 FUNCTIONS
+        function checkAnswers2() {
+            let correct = 0;
+            const answers = ['there is', 'there are', 'there isn\'t', 'is there', 'there aren\'t'];
+            
+            for (let i = 1; i <= 5; i++) {
+                const input = document.getElementById('q2-' + i);
+                const answer = input.value.trim().toLowerCase().replace(/'/g, '');
+                const correctAnswer = answers[i-1].replace(/'/g, '').replace(/ /g, '');
+                const userAnswer = answer.replace(/ /g, '');
+                
+                if (userAnswer === correctAnswer || userAnswer === answers[i-1].toLowerCase().replace(/ /g, '')) {
+                    input.classList.add('correct');
+                    input.classList.remove('incorrect');
+                    correct++;
+                } else {
+                    input.classList.add('incorrect');
+                    input.classList.remove('correct');
+                }
+            }
+            
+            const feedback = document.getElementById('feedback2');
+            feedback.classList.add('show');
+            const pts = correct * 10;
+            
+            if (correct === 5) {
+                feedback.className = 'feedback show correct';
+                feedback.innerHTML = `🎉 Perfect! All correct! <span class="points-earned">+${pts} points</span>`;
+            } else if (correct >= 3) {
+                feedback.className = 'feedback show correct';
+                feedback.innerHTML = `✅ Good! ${correct}/5 correct. <span class="points-earned">+${pts} points</span>`;
+            } else {
+                feedback.className = 'feedback show incorrect';
+                feedback.innerHTML = `📚 ${correct}/5 correct. Try again!`;
+            }
+            
+            if (correct >= 3) {
+                points += pts;
+                updatePoints();
+            }
+        }
+
+        function resetExercise2() {
+            for (let i = 1; i <= 5; i++) {
+                const input = document.getElementById('q2-' + i);
+                input.value = '';
+                input.classList.remove('correct', 'incorrect');
+            }
+            document.getElementById('feedback2').classList.remove('show');
+        }
+
+        function checkQuiz2() {
+            const answers = ['a', 'b', 'a', 'a', 'b'];
+            let correct = 0;
+            
+            for (let i = 1; i <= 5; i++) {
+                const selected = document.querySelector(`input[name="q2-${i}"]:checked`);
+                const options = document.querySelectorAll(`input[name="q2-${i}"]`);
+                
+                options.forEach(opt => {
+                    opt.parentElement.classList.remove('correct', 'incorrect');
+                });
+                
+                if (selected) {
+                    if (selected.value === answers[i-1]) {
+                        selected.parentElement.classList.add('correct');
+                        correct++;
+                    } else {
+                        selected.parentElement.classList.add('incorrect');
+                        options.forEach(opt => {
+                            if (opt.value === answers[i-1]) {
+                                opt.parentElement.classList.add('correct');
+                            }
+                        });
+                    }
+                }
+            }
+            
+            const feedback = document.getElementById('quiz-feedback2');
+            feedback.classList.add('show');
+            const percentage = (correct / 5) * 100;
+            const pts = correct * 20;
+            
+            if (percentage >= 60) {
+                feedback.className = 'feedback show correct';
+                feedback.innerHTML = `🎉 You scored ${percentage}%! <span class="points-earned">+${pts} points</span><br>Next lesson unlocked!`;
+                points += pts;
+                updatePoints();
+                document.getElementById('tab-prepositions').classList.remove('locked');
+                document.getElementById('tab-prepositions').textContent = 'Prepositions';
+                unlockBadge(2);
+            } else {
+                feedback.className = 'feedback show incorrect';
+                feedback.innerHTML = `📚 You scored ${percentage}%. Need 60%+ to unlock next lesson.`;
+            }
+        }
+
+        // LESSON 3 FUNCTIONS
+        function checkAnswers3() {
+            let correct = 0;
+            const answers = ['on', 'in', 'under', 'at', 'on'];
+            
+            for (let i = 1; i <= 5; i++) {
+                const input = document.getElementById('q3-' + i);
+                const answer = input.value.trim().toLowerCase();
+                
+                if (answer === answers[i-1]) {
+                    input.classList.add('correct');
+                    input.classList.remove('incorrect');
+                    correct++;
+                } else {
+                    input.classList.add('incorrect');
+                    input.classList.remove('correct');
+                }
+            }
+            
+            const feedback = document.getElementById('feedback3');
+            feedback.classList.add('show');
+            const pts = correct * 10;
+            
+            if (correct === 5) {
+                feedback.className = 'feedback show correct';
+                feedback.innerHTML = `🎉 Perfect! All correct! <span class="points-earned">+${pts} points</span>`;
+            } else if (correct >= 3) {
+                feedback.className = 'feedback show correct';
+                feedback.innerHTML = `✅ Good! ${correct}/5 correct. <span class="points-earned">+${pts} points</span>`;
+            } else {
+                feedback.className = 'feedback show incorrect';
+                feedback.innerHTML = `📚 ${correct}/5 correct. Try again!`;
+            }
+            
+            if (correct >= 3) {
+                points += pts;
+                updatePoints();
+            }
+        }
+
+        function resetExercise3() {
+            for (let i = 1; i <= 5; i++) {
+                const input = document.getElementById('q3-' + i);
+                input.value = '';
+                input.classList.remove('correct', 'incorrect');
+            }
+            document.getElementById('feedback3').classList.remove('show');
+        }
+
+        function checkQuiz3() {
+            const answers = ['b', 'a', 'b', 'c', 'a'];
+            let correct = 0;
+            
+            for (let i = 1; i <= 5; i++) {
+                const selected = document.querySelector(`input[name="q3-${i}"]:checked`);
+                const options = document.querySelectorAll(`input[name="q3-${i}"]`);
+                
+                options.forEach(opt => {
+                    opt.parentElement.classList.remove('correct', 'incorrect');
+                });
+                
+                if (selected) {
+                    if (selected.value === answers[i-1]) {
+                        selected.parentElement.classList.add('correct');
+                        correct++;
+                    } else {
+                        selected.parentElement.classList.add('incorrect');
+                        options.forEach(opt => {
+                            if (opt.value === answers[i-1]) {
+                                opt.parentElement.classList.add('correct');
+                            }
+                        });
+                    }
+                }
+            }
+            
+            const feedback = document.getElementById('quiz-feedback3');
+            feedback.classList.add('show');
+            const percentage = (correct / 5) * 100;
+            const pts = correct * 20;
+            
+            if (percentage >= 60) {
+                feedback.className = 'feedback show correct';
+                feedback.innerHTML = `🎉 Congratulations! You scored ${percentage}%! <span class="points-earned">+${pts} points</span><br>You completed all lessons! 🎊`;
+                points += pts;
+                updatePoints();
+                unlockBadge(3);
+            } else {
+                feedback.className = 'feedback show incorrect';
+                feedback.innerHTML = `📚 You scored ${percentage}%. Try again!`;
+            }
         }
 
         console.log('✅ Grammar app loaded successfully!');
