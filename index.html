@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Interactive A2 Grammar Learning Website - Higher Colleges of Technology">
-    <meta name="keywords" content="grammar, English learning, A2 level, ESL, education">
-    <meta name="author" content="HCT English Communications">
-    <title>A2 Grammar Booklet - Interactive Learning</title>
+    <title>A2 Grammar Booklet - Gamified Learning</title>
     <style>
         * {
             margin: 0;
@@ -16,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -26,7 +23,7 @@
             margin: 0 auto;
             background: white;
             border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             overflow: hidden;
         }
 
@@ -54,6 +51,102 @@
             right: 40px;
             bottom: 20px;
             font-size: 60px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Gamification Header */
+        .game-stats {
+            background: #2C5F7C;
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .stat-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.1);
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        .stat-icon {
+            font-size: 2em;
+        }
+
+        .stat-info h3 {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .stat-info p {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .progress-container {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+
+        .xp-bar {
+            height: 25px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .xp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.85em;
+        }
+
+        .badges-display {
+            display: flex;
+            gap: 10px;
+        }
+
+        .badge {
+            font-size: 2em;
+            filter: grayscale(100%);
+            opacity: 0.3;
+            transition: all 0.3s;
+        }
+
+        .badge.unlocked {
+            filter: grayscale(0%);
+            opacity: 1;
+            animation: badgePop 0.5s ease;
+        }
+
+        @keyframes badgePop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
 
         .nav-tabs {
@@ -75,6 +168,7 @@
             transition: all 0.3s;
             flex: 1;
             min-width: 150px;
+            position: relative;
         }
 
         .nav-tab:hover {
@@ -85,6 +179,27 @@
         .nav-tab.active {
             background: #FF8C42;
             box-shadow: 0 4px 10px rgba(255,140,66,0.3);
+        }
+
+        .nav-tab.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .nav-tab.locked::after {
+            content: '🔒';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .nav-tab.completed::before {
+            content: '✅';
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
         }
 
         .content {
@@ -169,9 +284,6 @@
             color: #FF8C42;
             font-size: 1.5em;
             margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
         .question {
@@ -218,10 +330,26 @@
             cursor: pointer;
             border-radius: 5px;
             transition: background 0.3s;
+            border: 2px solid transparent;
         }
 
         .radio-option:hover {
             background: #f0f0f0;
+        }
+
+        .radio-option.selected {
+            background: #e3f2fd;
+            border-color: #2196F3;
+        }
+
+        .radio-option.correct {
+            background: #e8f5e9;
+            border-color: #4CAF50;
+        }
+
+        .radio-option.incorrect {
+            background: #ffebee;
+            border-color: #f44336;
         }
 
         .radio-option input[type="radio"] {
@@ -238,6 +366,7 @@
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: 0 4px 10px rgba(255,140,66,0.3);
+            margin: 5px;
         }
 
         .btn:hover {
@@ -252,11 +381,16 @@
 
         .btn-check {
             background: #2C5F7C;
-            margin-right: 10px;
         }
 
         .btn-check:hover {
             background: #1a3a4d;
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
         }
 
         .feedback {
@@ -287,6 +421,23 @@
             background: #ffebee;
             color: #c62828;
             border-left: 5px solid #f44336;
+        }
+
+        .points-earned {
+            display: inline-block;
+            background: #FFD700;
+            color: #333;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-left: 10px;
+            animation: pointsPop 0.5s ease;
+        }
+
+        @keyframes pointsPop {
+            0% { transform: scale(0) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); }
         }
 
         .progress-bar {
@@ -339,6 +490,108 @@
             color: #FF8C42;
         }
 
+        /* MCQ Review Section */
+        .mcq-review {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .mcq-review h3 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .mcq-question {
+            background: white;
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .mcq-question-number {
+            background: #FF8C42;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* Level Up Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.show {
+            display: flex;
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            animation: modalPop 0.5s ease;
+        }
+
+        @keyframes modalPop {
+            0% { transform: scale(0) rotate(-10deg); }
+            50% { transform: scale(1.1) rotate(5deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .modal-content h2 {
+            color: #FF8C42;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .modal-content .badge-large {
+            font-size: 5em;
+            animation: spin 1s ease;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #FF8C42;
+            position: absolute;
+            animation: confetti-fall 3s linear;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 1.8em;
@@ -352,6 +605,10 @@
                 min-width: 120px;
                 font-size: 12px;
                 padding: 10px 15px;
+            }
+            
+            .game-stats {
+                flex-direction: column;
             }
             
             .owl-icon {
@@ -370,22 +627,49 @@
             <div class="owl-icon">🦉</div>
         </div>
 
+        <!-- Gamification Stats -->
+        <div class="game-stats">
+            <div class="stat-box">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-info">
+                    <h3>Total Points</h3>
+                    <p id="total-points">0</p>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-label">
+                    <span id="current-level">Level 1: Beginner</span>
+                    <span id="xp-text">0/100 XP</span>
+                </div>
+                <div class="xp-bar">
+                    <div class="xp-fill" id="xp-fill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-info">
+                    <h3>Badges Earned</h3>
+                    <div class="badges-display" id="badges-display">
+                        <span class="badge" id="badge-1" title="First Steps">🌟</span>
+                        <span class="badge" id="badge-2" title="Grammar Star">⭐</span>
+                        <span class="badge" id="badge-3" title="Expert">🏆</span>
+                        <span class="badge" id="badge-4" title="Master">👑</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="nav-tabs">
-            <button class="nav-tab active" onclick="showLesson('verb-to-be')">Verb to be</button>
-            <button class="nav-tab" onclick="showLesson('there-is-are')">There is/are</button>
-            <button class="nav-tab" onclick="showLesson('prepositions')">Prepositions</button>
-            <button class="nav-tab" onclick="showLesson('pronouns')">Pronouns</button>
-            <button class="nav-tab" onclick="showLesson('quantifiers')">Quantifiers</button>
-            <button class="nav-tab" onclick="showLesson('articles')">Articles</button>
-            <button class="nav-tab" onclick="showLesson('modals')">Modals</button>
-            <button class="nav-tab" onclick="showLesson('present-simple')">Present Simple</button>
-            <button class="nav-tab" onclick="showLesson('present-continuous')">Present Continuous</button>
+            <button class="nav-tab active" onclick="showLesson('verb-to-be')" id="tab-verb-to-be">Verb to be</button>
+            <button class="nav-tab locked" onclick="showLesson('there-is-are')" id="tab-there-is-are">There is/are</button>
+            <button class="nav-tab locked" onclick="showLesson('prepositions')" id="tab-prepositions">Prepositions</button>
         </div>
 
         <div class="content">
-            <!-- Verb to Be Lesson -->
+            <!-- Lesson 1: Verb to Be -->
             <div id="verb-to-be" class="lesson active">
-                <h2 class="lesson-title">Verb to be (Present Tense)</h2>
+                <h2 class="lesson-title">Lesson 1: Verb to be (Present Tense)</h2>
                 
                 <div class="grammar-box">
                     <h3>✨ Positive Form</h3>
@@ -433,23 +717,17 @@
                 <div class="grammar-box">
                     <h3>❓ Question Form</h3>
                     <p>Move the verb to be before the subject:</p>
-                    <div class="diagram">
-                        <div class="diagram-box">Am</div>
-                        <div class="diagram-plus">+</div>
-                        <div class="diagram-box">I</div>
-                        <div class="diagram-plus">+</div>
-                        <div class="diagram-box">?</div>
-                    </div>
-
+                    
                     <div class="example-box">
                         <strong>Examples:</strong><br>
                         • <span class="highlight">Am I</span> in this class?<br>
                         • <span class="highlight">Is she</span> your sister?<br>
-                        • <span class="highlight">Are they</span> visitors?
+                        • <span class="highlight">Are they</span> visitors?<br><br>
+                        <strong>Answers:</strong> Yes, I am. / No, I'm not.
                     </div>
                 </div>
 
-                <!-- Exercise Section -->
+                <!-- Practice Exercise -->
                 <div class="exercise-section">
                     <div class="exercise-title">📝 Practice Exercise</div>
                     
@@ -487,124 +765,132 @@
                         <div class="progress-fill" id="progress-verb-to-be">0%</div>
                     </div>
                 </div>
+
+                <!-- MCQ Review -->
+                <div class="mcq-review" id="mcq-verb-to-be">
+                    <h3>🎯 Unit Review - Multiple Choice Quiz</h3>
+                    <p style="text-align: center; margin-bottom: 20px;">Complete this quiz to unlock the next lesson!</p>
+
+                    <div class="mcq-question">
+                        <div class="question-text">
+                            <span class="mcq-question-number">1</span>
+                            Choose the correct form: "They _____ happy."
+                        </div>
+                        <label class="radio-option">
+                            <input type="radio" name="mcq1-1" value="a"> is
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="mcq1-1" value="b"> am
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="mcq1-1" value="c"> are
+                        </label>
+                    </div>
+
+                    <div class="mcq-question">
+                        <div class="question-text">
+                            <span class="mcq-question-number">2</span>
+                            Choose the correct negative form: "She _____ tired."
+                        </div>
+                        <label class="radio-option">
+                            <input type="radio" name="mcq1-2" value="a"> isn't
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="mcq1-2" value="b"> aren't
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="mcq1-2" value="c"> am not
+                        </label>
+                    </div>
+
+                    <div class="mcq-question">
+                        <div class="question-text">
+                            <span class="mcq-question-number">3</span>
+                            Make a question: "_____ you a student?"
+                        </div>
+                        <label class="radio-option">
+                            <input type="radio" name="mcq1-3" value="a"> Is
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="mcq1-3" value="b"> Are
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="mcq1-3" value="c"> Am
+                        </label>
+                    </div>
+
+                    <div class="mcq-question">
+                        <div class="question-text">
+                            <span class="mcq-question-number">4</span>
+                            Complete: "I _____ from Dubai."
+                        </div>
+                        <label class="radio-option">
+                            <input type="radio" name="mcq1-4" value="a"> am
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="mcq1-4" value="b"> is
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="mcq1-4" value="c"> are
+                        </label>
+                    </div>
+
+                    <div class="mcq-question">
+                        <div class="question-text">
+                            <span class="mcq-question-number">5</span>
+                            Choose the correct form: "The book _____ on the table."
+                        </div>
+                        <label class="radio-option">
+                            <input type="radio" name="mcq1-5" value="a"> am
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="mcq1-5" value="b"> is
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="mcq1-5" value="c"> are
+                        </label>
+                    </div>
+
+                    <button class="btn" onclick="checkMCQ('verb-to-be')">Submit Quiz</button>
+                    <div class="feedback" id="feedback-mcq-verb-to-be"></div>
+                </div>
             </div>
 
-            <!-- Additional lessons would continue here -->
-            <!-- I'm including a condensed version to keep the file size manageable -->
-            
-        </div>
-    </div>
+            <!-- Lesson 2: There is/are -->
+            <div id="there-is-are" class="lesson">
+                <h2 class="lesson-title">Lesson 2: There is / There are</h2>
+                
+                <div class="grammar-box">
+                    <h3>📌 Positive Form</h3>
+                    <p>Use <strong>There is</strong> for singular nouns (one thing)</p>
+                    <p>Use <strong>There are</strong> for plural nouns (two or more things)</p>
 
-    <script>
-        // Navigation
-        function showLesson(lessonId) {
-            const lessons = document.querySelectorAll('.lesson');
-            lessons.forEach(lesson => lesson.classList.remove('active'));
-            
-            const tabs = document.querySelectorAll('.nav-tab');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            
-            document.getElementById(lessonId).classList.add('active');
-            event.target.classList.add('active');
-            
-            window.scrollTo(0, 0);
-        }
+                    <div class="example-box">
+                        <strong>Examples:</strong><br>
+                        • <span class="highlight">There is</span> a book on the table.<br>
+                        • <span class="highlight">There are</span> three students in the class.
+                    </div>
+                </div>
 
-        // Reset exercise
-        function resetExercise(lessonId) {
-            const inputs = document.querySelectorAll(`#${lessonId} input[type="text"]`);
-            inputs.forEach(input => {
-                input.value = '';
-                input.classList.remove('correct', 'incorrect');
-            });
-            
-            const feedback = document.getElementById(`feedback-${lessonId}`);
-            if (feedback) {
-                feedback.classList.remove('show', 'correct', 'incorrect');
-                feedback.textContent = '';
-            }
-            
-            const progress = document.getElementById(`progress-${lessonId}`);
-            if (progress) {
-                progress.style.width = '0%';
-                progress.textContent = '0%';
-            }
-        }
+                <div class="grammar-box">
+                    <h3>❌ Negative Form</h3>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>There <strong>is not</strong> (isn't) any...</li>
+                        <li>There <strong>are not</strong> (aren't) any...</li>
+                    </ul>
 
-        // Check answer helper
-        function checkAnswer(input, correctAnswers) {
-            const userAnswer = input.value.trim().toLowerCase();
-            const isCorrect = correctAnswers.some(answer => 
-                userAnswer === answer.toLowerCase() || 
-                userAnswer.replace(/'/g, '') === answer.toLowerCase().replace(/'/g, '')
-            );
-            
-            if (isCorrect) {
-                input.classList.add('correct');
-                input.classList.remove('incorrect');
-            } else {
-                input.classList.add('incorrect');
-                input.classList.remove('correct');
-            }
-            
-            return isCorrect;
-        }
+                    <div class="example-box">
+                        <strong>Examples:</strong><br>
+                        • <span class="highlight">There isn't</span> a pen in my bag.<br>
+                        • <span class="highlight">There aren't</span> any apples in the basket.
+                    </div>
+                </div>
 
-        // Display feedback
-        function showFeedback(lessonId, correct, total) {
-            const feedback = document.getElementById(`feedback-${lessonId}`);
-            const percentage = Math.round((correct / total) * 100);
-            
-            feedback.classList.add('show');
-            
-            if (percentage === 100) {
-                feedback.classList.add('correct');
-                feedback.classList.remove('incorrect');
-                feedback.innerHTML = `🎉 Perfect! You got all ${total} questions correct!`;
-            } else if (percentage >= 60) {
-                feedback.classList.add('correct');
-                feedback.classList.remove('incorrect');
-                feedback.innerHTML = `✅ Good job! You got ${correct} out of ${total} correct. Keep practicing!`;
-            } else {
-                feedback.classList.add('incorrect');
-                feedback.classList.remove('correct');
-                feedback.innerHTML = `📚 You got ${correct} out of ${total} correct. Review the lesson and try again!`;
-            }
-            
-            const progress = document.getElementById(`progress-${lessonId}`);
-            if (progress) {
-                progress.style.width = percentage + '%';
-                progress.textContent = percentage + '%';
-            }
-        }
-
-        // Verb to Be exercises
-        function checkVerbToBe() {
-            let correct = 0;
-            const total = 5;
-            
-            const answers = [
-                { id: 'q1-1', correct: ['am'] },
-                { id: 'q1-2', correct: ['is'] },
-                { id: 'q1-3', correct: ['are not', 'aren\'t', 'arent'] },
-                { id: 'q1-4', correct: ['are'] },
-                { id: 'q1-5', correct: ['is not', 'isn\'t', 'isnt'] }
-            ];
-            
-            answers.forEach(answer => {
-                const input = document.getElementById(answer.id);
-                if (checkAnswer(input, answer.correct)) {
-                    correct++;
-                }
-            });
-            
-            showFeedback('verb-to-be', correct, total);
-        }
-
-        // Welcome message
-        window.addEventListener('load', function() {
-            console.log('🦉 Welcome to A2 Grammar Booklet - Interactive Learning!');
-        });
-    </script>
-</body>
-</html>
+                <div class="grammar-box">
+                    <h3>❓ Question Form</h3>
+                    
+                    <div class="example-box">
+                        <strong>Examples:</strong><br>
+                        • <span class="highlight">Is there</span> a cat under the table?<br>
+                        • <span class="highlight">Are there</span> any books on the shelf?<br><br>
+                        <strong>Answers:</strong> Yes, there
