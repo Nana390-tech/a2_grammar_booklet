@@ -3,660 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A2 Grammar Booklet - Gamified Learning</title>
+    <title>A2 Grammar Booklet - Gamified</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #FF8C42 0%, #FF6B35 100%);
-            color: white;
-            padding: 40px;
-            text-align: center;
-            position: relative;
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .header p {
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-
-        .owl-icon {
-            position: absolute;
-            right: 40px;
-            bottom: 20px;
-            font-size: 60px;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .game-stats {
-            background: #2C5F7C;
-            color: white;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .stat-box {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(255,255,255,0.1);
-            padding: 10px 20px;
-            border-radius: 10px;
-        }
-
-        .stat-icon {
-            font-size: 2em;
-        }
-
-        .stat-info h3 {
-            font-size: 0.9em;
-            opacity: 0.8;
-        }
-
-        .stat-info p {
-            font-size: 1.5em;
-            font-weight: bold;
-        }
-
-        .progress-container {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .progress-label {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-            font-size: 0.9em;
-        }
-
-        .xp-bar {
-            height: 25px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 15px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .xp-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #4CAF50, #8BC34A);
-            transition: width 0.5s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 0.85em;
-        }
-
-        .badges-display {
-            display: flex;
-            gap: 10px;
-        }
-
-        .badge {
-            font-size: 2em;
-            filter: grayscale(100%);
-            opacity: 0.3;
-            transition: all 0.3s;
-        }
-
-        .badge.unlocked {
-            filter: grayscale(0%);
-            opacity: 1;
-            animation: badgePop 0.5s ease;
-        }
-
-        @keyframes badgePop {
-            0% { transform: scale(0); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-
-        .nav-tabs {
-            display: flex;
-            flex-wrap: wrap;
-            background: #2C5F7C;
-            padding: 10px;
-            gap: 10px;
-        }
-
-        .nav-tab {
-            background: rgba(255,255,255,0.1);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
-            flex: 1;
-            min-width: 150px;
-            position: relative;
-        }
-
-        .nav-tab:hover {
-            background: rgba(255,255,255,0.2);
-            transform: translateY(-2px);
-        }
-
-        .nav-tab.active {
-            background: #FF8C42;
-            box-shadow: 0 4px 10px rgba(255,140,66,0.3);
-        }
-
-        .nav-tab.locked {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .nav-tab.locked::after {
-            content: '🔒';
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .nav-tab.completed::before {
-            content: '✅';
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .content {
-            padding: 40px;
-        }
-
-        .lesson {
-            display: none;
-            animation: fadeIn 0.5s;
-        }
-
-        .lesson.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .lesson-title {
-            color: #2C5F7C;
-            font-size: 2em;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #FF8C42;
-        }
-
-        .grammar-box {
-            background: #f8f9fa;
-            border-left: 5px solid #FF8C42;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 8px;
-        }
-
-        .grammar-box h3 {
-            color: #2C5F7C;
-            margin-bottom: 15px;
-        }
-
-        .example-box {
-            background: #e3f2fd;
-            border-left: 5px solid #2196F3;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 5px;
-        }
-
-        .exercise-section {
-            background: white;
-            border: 2px solid #FF8C42;
-            border-radius: 10px;
-            padding: 25px;
-            margin: 30px 0;
-        }
-
-        .exercise-title {
-            color: #FF8C42;
-            font-size: 1.5em;
-            margin-bottom: 20px;
-        }
-
-        .question {
-            margin: 20px 0;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 8px;
-        }
-
-        .question-text {
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        input[type="text"] {
-            padding: 10px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            min-width: 200px;
-            transition: border-color 0.3s;
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #FF8C42;
-        }
-
-        input.correct {
-            border-color: #4CAF50;
-            background: #e8f5e9;
-        }
-
-        input.incorrect {
-            border-color: #f44336;
-            background: #ffebee;
-        }
-
-        .radio-option {
-            display: block;
-            margin: 10px 0;
-            padding: 10px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background 0.3s;
-            border: 2px solid transparent;
-        }
-
-        .radio-option:hover {
-            background: #f0f0f0;
-        }
-
-        .radio-option.selected {
-            background: #e3f2fd;
-            border-color: #2196F3;
-        }
-
-        .radio-option.correct {
-            background: #e8f5e9;
-            border-color: #4CAF50;
-        }
-
-        .radio-option.incorrect {
-            background: #ffebee;
-            border-color: #f44336;
-        }
-
-        .radio-option input[type="radio"] {
-            margin-right: 10px;
-        }
-
-        .btn {
-            background: #FF8C42;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 10px rgba(255,140,66,0.3);
-            margin: 5px;
-        }
-
-        .btn:hover {
-            background: #FF6B35;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(255,140,66,0.4);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        .btn-check {
-            background: #2C5F7C;
-        }
-
-        .btn-check:hover {
-            background: #1a3a4d;
-        }
-
-        .feedback {
-            margin-top: 15px;
-            padding: 15px;
-            border-radius: 8px;
-            font-weight: bold;
-            display: none;
-        }
-
-        .feedback.show {
-            display: block;
-            animation: slideIn 0.3s;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .feedback.correct {
-            background: #e8f5e9;
-            color: #2e7d32;
-            border-left: 5px solid #4CAF50;
-        }
-
-        .feedback.incorrect {
-            background: #ffebee;
-            color: #c62828;
-            border-left: 5px solid #f44336;
-        }
-
-        .points-earned {
-            display: inline-block;
-            background: #FFD700;
-            color: #333;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            margin-left: 10px;
-            animation: pointsPop 0.5s ease;
-        }
-
-        @keyframes pointsPop {
-            0% { transform: scale(0) rotate(0deg); }
-            50% { transform: scale(1.2) rotate(10deg); }
-            100% { transform: scale(1) rotate(0deg); }
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 30px;
-            background: #e0e0e0;
-            border-radius: 15px;
-            overflow: hidden;
-            margin: 20px 0;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #4CAF50, #8BC34A);
-            width: 0%;
-            transition: width 0.5s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-        }
-
-        .highlight {
-            background: #fff3cd;
-            padding: 2px 5px;
-            border-radius: 3px;
-            font-weight: bold;
-        }
-
-        .diagram {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin: 20px 0;
-            flex-wrap: wrap;
-        }
-
-        .diagram-box {
-            background: #2C5F7C;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 50px;
-            font-weight: bold;
-        }
-
-        .diagram-plus {
-            font-size: 2em;
-            color: #FF8C42;
-        }
-
-        .mcq-review {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            margin: 30px 0;
-        }
-
-        .mcq-review h3 {
-            font-size: 2em;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .mcq-question {
-            background: white;
-            color: #333;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-        }
-
-        .mcq-question-number {
-            background: #FF8C42;
-            color: white;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal.show {
-            display: flex;
-            animation: fadeIn 0.3s;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            text-align: center;
-            max-width: 500px;
-            animation: modalPop 0.5s ease;
-        }
-
-        @keyframes modalPop {
-            0% { transform: scale(0) rotate(-10deg); }
-            50% { transform: scale(1.1) rotate(5deg); }
-            100% { transform: scale(1) rotate(0deg); }
-        }
-
-        .modal-content h2 {
-            color: #FF8C42;
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-
-        .modal-content .badge-large {
-            font-size: 5em;
-            animation: spin 1s ease;
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @media (max-width: 768px) {
-            .header h1 { font-size: 1.8em; }
-            .content { padding: 20px; }
-            .nav-tab { min-width: 120px; font-size: 12px; padding: 10px 15px; }
-            .game-stats { flex-direction: column; }
-            .owl-icon { font-size: 40px; right: 20px; }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #FF8C42 0%, #FF6B35 100%); color: white; padding: 40px; text-align: center; }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .game-stats { background: #2C5F7C; color: white; padding: 20px; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; }
+        .stat-box { background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; text-align: center; }
+        .stat-box h3 { font-size: 0.9em; margin-bottom: 5px; }
+        .stat-box p { font-size: 1.8em; font-weight: bold; }
+        .badge { font-size: 2em; filter: grayscale(100%); opacity: 0.3; margin: 0 5px; }
+        .badge.unlocked { filter: grayscale(0%); opacity: 1; }
+        .nav-tabs { display: flex; background: #2C5F7C; padding: 10px; gap: 10px; flex-wrap: wrap; }
+        .nav-tab { background: rgba(255,255,255,0.1); color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; flex: 1; min-width: 120px; }
+        .nav-tab:hover { background: rgba(255,255,255,0.2); }
+        .nav-tab.active { background: #FF8C42; }
+        .nav-tab.locked { opacity: 0.5; cursor: not-allowed; }
+        .content { padding: 40px; }
+        .lesson { display: none; }
+        .lesson.active { display: block; }
+        .lesson-title { color: #2C5F7C; font-size: 2em; margin-bottom: 20px; border-bottom: 3px solid #FF8C42; padding-bottom: 10px; }
+        .grammar-box { background: #f8f9fa; border-left: 5px solid #FF8C42; padding: 20px; margin: 20px 0; border-radius: 8px; }
+        .grammar-box h3 { color: #2C5F7C; margin-bottom: 15px; }
+        .example-box { background: #e3f2fd; border-left: 5px solid #2196F3; padding: 15px; margin: 15px 0; border-radius: 5px; }
+        .highlight { background: #fff3cd; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
+        .exercise-section { background: white; border: 2px solid #FF8C42; border-radius: 10px; padding: 25px; margin: 30px 0; }
+        .exercise-title { color: #FF8C42; font-size: 1.5em; margin-bottom: 20px; }
+        .question { margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 8px; }
+        .question-text { font-weight: bold; margin-bottom: 10px; }
+        input[type="text"] { padding: 10px; border: 2px solid #ddd; border-radius: 5px; font-size: 16px; min-width: 200px; }
+        input.correct { border-color: #4CAF50; background: #e8f5e9; }
+        input.incorrect { border-color: #f44336; background: #ffebee; }
+        .radio-option { display: block; margin: 10px 0; padding: 10px; cursor: pointer; border-radius: 5px; border: 2px solid transparent; }
+        .radio-option:hover { background: #f0f0f0; }
+        .radio-option.correct { background: #e8f5e9; border-color: #4CAF50; }
+        .radio-option.incorrect { background: #ffebee; border-color: #f44336; }
+        .btn { background: #FF8C42; color: white; border: none; padding: 12px 30px; border-radius: 25px; font-size: 16px; cursor: pointer; margin: 5px; }
+        .btn:hover { background: #FF6B35; }
+        .btn-check { background: #2C5F7C; }
+        .feedback { margin-top: 15px; padding: 15px; border-radius: 8px; font-weight: bold; display: none; }
+        .feedback.show { display: block; }
+        .feedback.correct { background: #e8f5e9; color: #2e7d32; border-left: 5px solid #4CAF50; }
+        .feedback.incorrect { background: #ffebee; color: #c62828; border-left: 5px solid #f44336; }
+        .points-earned { background: #FFD700; color: #333; padding: 5px 15px; border-radius: 20px; margin-left: 10px; }
+        .mcq-review { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 15px; margin: 30px 0; }
+        .mcq-review h3 { font-size: 2em; margin-bottom: 20px; text-align: center; }
+        .mcq-question { background: white; color: #333; padding: 20px; border-radius: 10px; margin: 20px 0; }
+        @media (max-width: 768px) { .header h1 { font-size: 1.5em; } .content { padding: 20px; } }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>📚 A2 Grammar Booklet</h1>
-            <p>Higher Colleges of Technology - English Communications</p>
-            <p>Interactive Learning Edition</p>
-            <div class="owl-icon">🦉</div>
+            <p>Higher Colleges of Technology</p>
+            <p>Gamified Learning Edition</p>
         </div>
 
         <div class="game-stats">
             <div class="stat-box">
-                <div class="stat-icon">⭐</div>
-                <div class="stat-info">
-                    <h3>Total Points</h3>
-                    <p id="total-points">0</p>
-                </div>
+                <h3>Total Points</h3>
+                <p id="total-points">0</p>
             </div>
-
-            <div class="progress-container">
-                <div class="progress-label">
-                    <span id="current-level">Level 1: Beginner</span>
-                    <span id="xp-text">0/100 XP</span>
-                </div>
-                <div class="xp-bar">
-                    <div class="xp-fill" id="xp-fill" style="width: 0%"></div>
-                </div>
-            </div>
-
             <div class="stat-box">
-                <div class="stat-info">
-                    <h3>Badges Earned</h3>
-                    <div class="badges-display" id="badges-display">
-                        <span class="badge" id="badge-1" title="First Steps">🌟</span>
-                        <span class="badge" id="badge-2" title="Grammar Star">⭐</span>
-                        <span class="badge" id="badge-3" title="Expert">🏆</span>
-                        <span class="badge" id="badge-4" title="Master">👑</span>
-                    </div>
+                <h3>Level</h3>
+                <p id="current-level">1</p>
+            </div>
+            <div class="stat-box">
+                <h3>Badges</h3>
+                <div>
+                    <span class="badge" id="badge-1">🌟</span>
+                    <span class="badge" id="badge-2">⭐</span>
+                    <span class="badge" id="badge-3">🏆</span>
                 </div>
             </div>
         </div>
 
         <div class="nav-tabs">
             <button class="nav-tab active" onclick="showLesson('verb-to-be')" id="tab-verb-to-be">Verb to be</button>
-            <button class="nav-tab locked" onclick="showLesson('there-is-are')" id="tab-there-is-are">There is/are</button>
-            <button class="nav-tab locked" onclick="showLesson('prepositions')" id="tab-prepositions">Prepositions</button>
+            <button class="nav-tab locked" onclick="showLesson('there-is-are')" id="tab-there-is-are">There is/are 🔒</button>
+            <button class="nav-tab locked" onclick="showLesson('prepositions')" id="tab-prepositions">Prepositions 🔒</button>
         </div>
 
         <div class="content">
             <div id="verb-to-be" class="lesson active">
-                <h2 class="lesson-title">Lesson 1: Verb to be (Present Tense)</h2>
+                <h2 class="lesson-title">Lesson 1: Verb to be</h2>
                 
                 <div class="grammar-box">
                     <h3>✨ Positive Form</h3>
-                    <div class="diagram">
-                        <div class="diagram-box">I</div>
-                        <div class="diagram-plus">→</div>
-                        <div class="diagram-box">am</div>
-                    </div>
-                    <div class="diagram">
-                        <div class="diagram-box">He / She / It</div>
-                        <div class="diagram-plus">→</div>
-                        <div class="diagram-box">is</div>
-                    </div>
-                    <div class="diagram">
-                        <div class="diagram-box">We / You / They</div>
-                        <div class="diagram-plus">→</div>
-                        <div class="diagram-box">are</div>
-                    </div>
-
+                    <p><strong>I</strong> → am | <strong>He/She/It</strong> → is | <strong>We/You/They</strong> → are</p>
                     <div class="example-box">
                         <strong>Examples:</strong><br>
                         • I <span class="highlight">am</span> hungry.<br>
-                        • She <span class="highlight">is</span> lazy.<br>
+                        • She <span class="highlight">is</span> a teacher.<br>
                         • They <span class="highlight">are</span> students.
                     </div>
                 </div>
 
                 <div class="grammar-box">
                     <h3>❌ Negative Form</h3>
-                    <p>Add <strong>not</strong> after the verb to be:</p>
-                    <ul style="margin-left: 20px; margin-top: 10px;">
-                        <li>I am <strong>not</strong> (I'm not)</li>
-                        <li>He/She/It is <strong>not</strong> (isn't)</li>
-                        <li>We/You/They are <strong>not</strong> (aren't)</li>
-                    </ul>
-
+                    <p>Add <strong>not</strong> after the verb: am not, is not (isn't), are not (aren't)</p>
                     <div class="example-box">
                         <strong>Examples:</strong><br>
-                        • I <span class="highlight">am not</span> hungry.<br>
-                        • She <span class="highlight">is not</span> lazy.<br>
-                        • They <span class="highlight">are not</span> students.
-                    </div>
-                </div>
-
-                <div class="grammar-box">
-                    <h3>❓ Question Form</h3>
-                    <p>Move the verb to be before the subject:</p>
-                    
-                    <div class="example-box">
-                        <strong>Examples:</strong><br>
-                        • <span class="highlight">Am I</span> in this class?<br>
-                        • <span class="highlight">Is she</span> your sister?<br>
-                        • <span class="highlight">Are they</span> visitors?<br><br>
-                        <strong>Answers:</strong> Yes, I am. / No, I'm not.
+                        • I <span class="highlight">am not</span> tired.<br>
+                        • She <span class="highlight">isn't</span> here.<br>
+                        • They <span class="highlight">aren't</span> ready.
                     </div>
                 </div>
 
@@ -664,442 +117,216 @@
                     <div class="exercise-title">📝 Practice Exercise</div>
                     
                     <div class="question">
-                        <div class="question-text">1. I _____ a student. (positive)</div>
-                        <input type="text" id="q1-1" placeholder="Type your answer">
+                        <div class="question-text">1. I _____ a student.</div>
+                        <input type="text" id="q1">
                     </div>
 
                     <div class="question">
-                        <div class="question-text">2. She _____ tired. (positive)</div>
-                        <input type="text" id="q1-2" placeholder="Type your answer">
+                        <div class="question-text">2. She _____ tired.</div>
+                        <input type="text" id="q2">
                     </div>
 
                     <div class="question">
                         <div class="question-text">3. They _____ at home. (negative)</div>
-                        <input type="text" id="q1-3" placeholder="Type your answer">
+                        <input type="text" id="q3">
                     </div>
 
                     <div class="question">
-                        <div class="question-text">4. _____ you ready? (question)</div>
-                        <input type="text" id="q1-4" placeholder="Type your answer">
+                        <div class="question-text">4. _____ you ready?</div>
+                        <input type="text" id="q4">
                     </div>
 
                     <div class="question">
                         <div class="question-text">5. He _____ my brother. (negative)</div>
-                        <input type="text" id="q1-5" placeholder="Type your answer">
+                        <input type="text" id="q5">
                     </div>
 
-                    <button class="btn btn-check" onclick="checkVerbToBe()">Check Answers</button>
-                    <button class="btn" onclick="resetExercise('verb-to-be')">Reset</button>
+                    <button class="btn btn-check" onclick="checkAnswers()">Check Answers</button>
+                    <button class="btn" onclick="resetExercise()">Reset</button>
                     
-                    <div class="feedback" id="feedback-verb-to-be"></div>
-                    
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progress-verb-to-be">0%</div>
-                    </div>
+                    <div class="feedback" id="feedback"></div>
                 </div>
 
-                <div class="mcq-review" id="mcq-verb-to-be">
-                    <h3>🎯 Unit Review - Multiple Choice Quiz</h3>
-                    <p style="text-align: center; margin-bottom: 20px;">Complete this quiz to unlock the next lesson!</p>
+                <div class="mcq-review">
+                    <h3>🎯 Unit Review Quiz</h3>
+                    <p style="text-align: center; margin-bottom: 20px;">Score 60%+ to unlock next lesson!</p>
 
                     <div class="mcq-question">
-                        <div class="question-text">
-                            <span class="mcq-question-number">1</span>
-                            Choose the correct form: "They _____ happy."
-                        </div>
-                        <label class="radio-option">
-                            <input type="radio" name="mcq1-1" value="a"> is
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="mcq1-1" value="b"> am
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="mcq1-1" value="c"> are
-                        </label>
+                        <div class="question-text"><strong>1.</strong> Choose: "They _____ happy."</div>
+                        <label class="radio-option"><input type="radio" name="q1" value="a"> is</label>
+                        <label class="radio-option"><input type="radio" name="q1" value="b"> am</label>
+                        <label class="radio-option"><input type="radio" name="q1" value="c"> are</label>
                     </div>
 
                     <div class="mcq-question">
-                        <div class="question-text">
-                            <span class="mcq-question-number">2</span>
-                            Choose the correct negative form: "She _____ tired."
-                        </div>
-                        <label class="radio-option">
-                            <input type="radio" name="mcq1-2" value="a"> isn't
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="mcq1-2" value="b"> aren't
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="mcq1-2" value="c"> am not
-                        </label>
+                        <div class="question-text"><strong>2.</strong> Negative form: "She _____ tired."</div>
+                        <label class="radio-option"><input type="radio" name="q2" value="a"> isn't</label>
+                        <label class="radio-option"><input type="radio" name="q2" value="b"> aren't</label>
+                        <label class="radio-option"><input type="radio" name="q2" value="c"> am not</label>
                     </div>
 
                     <div class="mcq-question">
-                        <div class="question-text">
-                            <span class="mcq-question-number">3</span>
-                            Make a question: "_____ you a student?"
-                        </div>
-                        <label class="radio-option">
-                            <input type="radio" name="mcq1-3" value="a"> Is
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="mcq1-3" value="b"> Are
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="mcq1-3" value="c"> Am
-                        </label>
+                        <div class="question-text"><strong>3.</strong> Question: "_____ you a student?"</div>
+                        <label class="radio-option"><input type="radio" name="q3" value="a"> Is</label>
+                        <label class="radio-option"><input type="radio" name="q3" value="b"> Are</label>
+                        <label class="radio-option"><input type="radio" name="q3" value="c"> Am</label>
                     </div>
 
                     <div class="mcq-question">
-                        <div class="question-text">
-                            <span class="mcq-question-number">4</span>
-                            Complete: "I _____ from Dubai."
-                        </div>
-                        <label class="radio-option">
-                            <input type="radio" name="mcq1-4" value="a"> am
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="mcq1-4" value="b"> is
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="mcq1-4" value="c"> are
-                        </label>
+                        <div class="question-text"><strong>4.</strong> Complete: "I _____ from Dubai."</div>
+                        <label class="radio-option"><input type="radio" name="q4" value="a"> am</label>
+                        <label class="radio-option"><input type="radio" name="q4" value="b"> is</label>
+                        <label class="radio-option"><input type="radio" name="q4" value="c"> are</label>
                     </div>
 
                     <div class="mcq-question">
-                        <div class="question-text">
-                            <span class="mcq-question-number">5</span>
-                            Choose the correct form: "The book _____ on the table."
-                        </div>
-                        <label class="radio-option">
-                            <input type="radio" name="mcq1-5" value="a"> am
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="mcq1-5" value="b"> is
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="mcq1-5" value="c"> are
-                        </label>
+                        <div class="question-text"><strong>5.</strong> Choose: "The book _____ on the table."</div>
+                        <label class="radio-option"><input type="radio" name="q5" value="a"> am</label>
+                        <label class="radio-option"><input type="radio" name="q5" value="b"> is</label>
+                        <label class="radio-option"><input type="radio" name="q5" value="c"> are</label>
                     </div>
 
-                    <button class="btn" onclick="checkMCQ('verb-to-be')">Submit Quiz</button>
-                    <div class="feedback" id="feedback-mcq-verb-to-be"></div>
+                    <button class="btn" onclick="checkQuiz()">Submit Quiz</button>
+                    <div class="feedback" id="quiz-feedback"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal" id="level-up-modal">
-        <div class="modal-content">
-            <h2>🎉 Level Up!</h2>
-            <div class="badge-large" id="modal-badge">⭐</div>
-            <p id="modal-message" style="font-size: 1.5em; margin: 20px 0;"></p>
-            <button class="btn" onclick="closeModal()">Continue</button>
-        </div>
-    </div>
-
     <script>
-        let gameState = {
-            totalPoints: 0,
-            currentXP: 0,
-            level: 1,
-            completedLessons: [],
-            unlockedBadges: []
-        };
+        let points = 0;
+        let level = 1;
 
-        const levels = [
-            { level: 1, name: 'Beginner', xpNeeded: 100, badge: '🌟' },
-            { level: 2, name: 'Intermediate', xpNeeded: 250, badge: '⭐' },
-            { level: 3, name: 'Advanced', xpNeeded: 500, badge: '🏆' },
-            { level: 4, name: 'Master', xpNeeded: 1000, badge: '👑' }
-        ];
-
-        function loadGameState() {
-            const saved = localStorage.getItem('grammarGameState');
-            if (saved) {
-                gameState = JSON.parse(saved);
-                updateUI();
-                gameState.completedLessons.forEach(lesson => {
-                    document.getElementById('tab-' + lesson).classList.add('completed');
-                    document.getElementById('tab-' + lesson).classList.remove('locked');
-                });
-                gameState.unlockedBadges.forEach(badgeId => {
-                    document.getElementById('badge-' + badgeId).classList.add('unlocked');
-                });
-            }
-        }
-
-        function saveGameState() {
-            localStorage.setItem('grammarGameState', JSON.stringify(gameState));
-        }
-
-        function updateUI() {
-            document.getElementById('total-points').textContent = gameState.totalPoints;
-            document.getElementById('xp-text').textContent = `${gameState.currentXP}/${levels[gameState.level - 1].xpNeeded} XP`;
-            document.getElementById('current-level').textContent = `Level ${gameState.level}: ${levels[gameState.level - 1].name}`;
-            const xpPercentage = (gameState.currentXP / levels[gameState.level - 1].xpNeeded) * 100;
-            document.getElementById('xp-fill').style.width = xpPercentage + '%';
-        }
-
-        function addPoints(points) {
-            gameState.totalPoints += points;
-            gameState.currentXP += points;
-            if (gameState.level < levels.length && gameState.currentXP >= levels[gameState.level - 1].xpNeeded) {
-                gameState.currentXP -= levels[gameState.level - 1].xpNeeded;
-                gameState.level++;
-                showLevelUpModal();
-                unlockBadge(gameState.level);
-            }
-            updateUI();
-            saveGameState();
-        }
-
-        function unlockBadge(badgeId) {
-            if (!gameState.unlockedBadges.includes(badgeId)) {
-                gameState.unlockedBadges.push(badgeId);
-                document.getElementById('badge-' + badgeId).classList.add('unlocked');
-                saveGameState();
-            }
-        }
-
-        function showLevelUpModal() {
-            const modal = document.getElementById('level-up-modal');
-            const badge = document.getElementById('modal-badge');
-            const message = document.getElementById('modal-message');
-            badge.textContent = levels[gameState.level - 1].badge;
-            message.textContent = `You reached ${levels[gameState.level - 1].name} level!`;
-            modal.classList.add('show');
-            createConfetti();
-        }
-
-        function closeModal() {
-            document.getElementById('level-up-modal').classList.remove('show');
-        }
-
-        function createConfetti() {
-            const colors = ['#FF8C42', '#FF6B35', '#4CAF50', '#2
-                            196F3', '#FFD700'];
-            for (let i = 0; i < 50; i++) {
-                setTimeout(() => {
-                    const confetti = document.createElement('div');
-                    confetti.style.position = 'fixed';
-                    confetti.style.width = '10px';
-                    confetti.style.height = '10px';
-                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    confetti.style.left = Math.random() * 100 + '%';
-                    confetti.style.top = '-10px';
-                    confetti.style.opacity = '1';
-                    confetti.style.animation = 'confetti-fall 3s linear';
-                    document.body.appendChild(confetti);
-                    setTimeout(() => confetti.remove(), 3000);
-                }, i * 30);
-            }
-        }
-
-        function showLesson(lessonId) {
-            const tab = document.getElementById('tab-' + lessonId);
-            if (tab.classList.contains('locked')) {
-                alert('🔒 Complete the previous lesson to unlock this one!');
-                return;
-            }
-            const lessons = document.querySelectorAll('.lesson');
-            lessons.forEach(lesson => lesson.classList.remove('active'));
-            const tabs = document.querySelectorAll('.nav-tab');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            document.getElementById(lessonId).classList.add('active');
-            tab.classList.add('active');
-            window.scrollTo(0, 0);
-        }
-
-        function resetExercise(lessonId) {
-            const inputs = document.querySelectorAll(`#${lessonId} input[type="text"]`);
-            inputs.forEach(input => {
-                input.value = '';
-                input.classList.remove('correct', 'incorrect');
-            });
-            const radios = document.querySelectorAll(`#${lessonId} input[type="radio"]`);
-            radios.forEach(radio => radio.checked = false);
-            const feedback = document.getElementById(`feedback-${lessonId}`);
-            if (feedback) {
-                feedback.classList.remove('show', 'correct', 'incorrect');
-                feedback.textContent = '';
-            }
-            const progress = document.getElementById(`progress-${lessonId}`);
-            if (progress) {
-                progress.style.width = '0%';
-                progress.textContent = '0%';
-            }
-        }
-
-        function checkAnswer(input, correctAnswers) {
-            const userAnswer = input.value.trim().toLowerCase();
-            const isCorrect = correctAnswers.some(answer => 
-                userAnswer === answer.toLowerCase() || 
-                userAnswer.replace(/'/g, '') === answer.toLowerCase().replace(/'/g, '')
-            );
-            if (isCorrect) {
-                input.classList.add('correct');
-                input.classList.remove('incorrect');
-            } else {
-                input.classList.add('incorrect');
-                input.classList.remove('correct');
-            }
-            return isCorrect;
-        }
-
-        function showFeedback(lessonId, correct, total, pointsPerQuestion = 10) {
-            const feedback = document.getElementById(`feedback-${lessonId}`);
-            const percentage = Math.round((correct / total) * 100);
-            const pointsEarned = correct * pointsPerQuestion;
-            feedback.classList.add('show');
-            if (percentage === 100) {
-                feedback.classList.add('correct');
-                feedback.classList.remove('incorrect');
-                feedback.innerHTML = `🎉 Perfect! You got all ${total} questions correct! <span class="points-earned">+${pointsEarned} points</span>`;
-                addPoints(pointsEarned);
-            } else if (percentage >= 60) {
-                feedback.classList.add('correct');
-                feedback.classList.remove('incorrect');
-                feedback.innerHTML = `✅ Good job! You got ${correct} out of ${total} correct. <span class="points-earned">+${pointsEarned} points</span>`;
-                addPoints(pointsEarned);
-            } else {
-                feedback.classList.add('incorrect');
-                feedback.classList.remove('correct');
-                feedback.innerHTML = `📚 You got ${correct} out of ${total} correct. Review the lesson and try again!`;
-            }
-            const progress = document.getElementById(`progress-${lessonId}`);
-            if (progress) {
-                progress.style.width = percentage + '%';
-                progress.textContent = percentage + '%';
-            }
-        }
-
-        function checkVerbToBe() {
+        function checkAnswers() {
             let correct = 0;
-            const total = 5;
-            const answers = [
-                { id: 'q1-1', correct: ['am'] },
-                { id: 'q1-2', correct: ['is'] },
-                { id: 'q1-3', correct: ['are not', 'aren\'t', 'arent'] },
-                { id: 'q1-4', correct: ['are'] },
-                { id: 'q1-5', correct: ['is not', 'isn\'t', 'isnt'] }
-            ];
-            answers.forEach(answer => {
-                const input = document.getElementById(answer.id);
-                if (checkAnswer(input, answer.correct)) {
+            const answers = ['am', 'is', 'aren\'t', 'are', 'isn\'t'];
+            
+            for (let i = 1; i <= 5; i++) {
+                const input = document.getElementById('q' + i);
+                const answer = input.value.trim().toLowerCase().replace(/'/g, '');
+                const correctAnswer = answers[i-1].replace(/'/g, '');
+                
+                if (answer === correctAnswer || answer === answers[i-1].replace(' ', '')) {
+                    input.classList.add('correct');
+                    input.classList.remove('incorrect');
                     correct++;
+                } else {
+                    input.classList.add('incorrect');
+                    input.classList.remove('correct');
                 }
-            });
-            showFeedback('verb-to-be', correct, total);
+            }
+            
+            const feedback = document.getElementById('feedback');
+            feedback.classList.add('show');
+            const pts = correct * 10;
+            
+            if (correct === 5) {
+                feedback.className = 'feedback show correct';
+                feedback.innerHTML = `🎉 Perfect! All correct! <span class="points-earned">+${pts} points</span>`;
+            } else if (correct >= 3) {
+                feedback.className = 'feedback show correct';
+                feedback.innerHTML = `✅ Good! ${correct}/5 correct. <span class="points-earned">+${pts} points</span>`;
+            } else {
+                feedback.className = 'feedback show incorrect';
+                feedback.innerHTML = `📚 ${correct}/5 correct. Try again!`;
+            }
+            
+            if (correct >= 3) {
+                points += pts;
+                updatePoints();
+            }
         }
 
-        function checkMCQ(lessonId) {
+        function checkQuiz() {
+            const answers = ['c', 'a', 'b', 'a', 'b'];
             let correct = 0;
-            const total = 5;
-            const correctAnswers = {
-                'verb-to-be': ['c', 'a', 'b', 'a', 'b']
-            };
-            const answers = correctAnswers[lessonId];
-            for (let i = 1; i <= total; i++) {
-                const selected = document.querySelector(`input[name="mcq1-${i}"]:checked`);
-                const options = document.querySelectorAll(`input[name="mcq1-${i}"]`);
-                options.forEach(option => {
-                    option.parentElement.classList.remove('correct', 'incorrect', 'selected');
+            
+            for (let i = 1; i <= 5; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                const options = document.querySelectorAll(`input[name="q${i}"]`);
+                
+                options.forEach(opt => {
+                    opt.parentElement.classList.remove('correct', 'incorrect');
                 });
+                
                 if (selected) {
-                    selected.parentElement.classList.add('selected');
-                    if (selected.value === answers[i - 1]) {
+                    if (selected.value === answers[i-1]) {
                         selected.parentElement.classList.add('correct');
                         correct++;
                     } else {
                         selected.parentElement.classList.add('incorrect');
-                        options.forEach(option => {
-                            if (option.value === answers[i - 1]) {
-                                option.parentElement.classList.add('correct');
+                        options.forEach(opt => {
+                            if (opt.value === answers[i-1]) {
+                                opt.parentElement.classList.add('correct');
                             }
                         });
                     }
                 }
             }
-            const feedback = document.getElementById(`feedback-mcq-${lessonId}`);
-            const percentage = Math.round((correct / total) * 100);
-            const pointsEarned = correct * 20;
+            
+            const feedback = document.getElementById('quiz-feedback');
             feedback.classList.add('show');
-            if (percentage >= 80) {
-                feedback.classList.add('correct');
-                feedback.classList.remove('incorrect');
-                feedback.innerHTML = `🎉 Excellent! You scored ${percentage}%! <span class="points-earned">+${pointsEarned} points</span><br>Next lesson unlocked! 🎊`;
-                addPoints(pointsEarned);
-                if (!gameState.completedLessons.includes(lessonId)) {
-                    gameState.completedLessons.push(lessonId);
-                    saveGameState();
-                }
-                unlockNextLesson(lessonId);
-                if (gameState.unlockedBadges.length === 0) {
-                    unlockBadge(1);
-                }
-            } else if (percentage >= 60) {
-                feedback.classList.add('correct');
-                feedback.classList.remove('incorrect');
-                feedback.innerHTML = `✅ Good! You scored ${percentage}%! <span class="points-earned">+${pointsEarned} points</span><br>Next lesson unlocked!`;
-                addPoints(pointsEarned);
-                if (!gameState.completedLessons.includes(lessonId)) {
-                    gameState.completedLessons.push(lessonId);
-                    saveGameState();
-                }
-                unlockNextLesson(lessonId);
+            const percentage = (correct / 5) * 100;
+            const pts = correct * 20;
+            
+            if (percentage >= 60) {
+                feedback.className = 'feedback show correct';
+                feedback.innerHTML = `🎉 You scored ${percentage}%! <span class="points-earned">+${pts} points</span><br>Next lesson unlocked!`;
+                points += pts;
+                updatePoints();
+                unlockNextLesson();
+                unlockBadge(1);
             } else {
-                feedback.classList.add('incorrect');
-                feedback.classList.remove('correct');
-                feedback.innerHTML = `📚 You scored ${percentage}%. You need at least 60% to unlock the next lesson. Review and try again!`;
+                feedback.className = 'feedback show incorrect';
+                feedback.innerHTML = `📚 You scored ${percentage}%. Need 60%+ to unlock next lesson.`;
             }
         }
 
-        function unlockNextLesson(currentLesson) {
-            const lessonOrder = ['verb-to-be', 'there-is-are', 'prepositions'];
-            const currentIndex = lessonOrder.indexOf(currentLesson);
-            if (currentIndex < lessonOrder.length - 1) {
-                const nextLesson = lessonOrder[currentIndex + 1];
-                const nextTab = document.getElementById('tab-' + nextLesson);
-                nextTab.classList.remove('locked');
-                document.getElementById('tab-' + currentLesson).classList.add('completed');
+        function resetExercise() {
+            for (let i = 1; i <= 5; i++) {
+                const input = document.getElementById('q' + i);
+                input.value = '';
+                input.classList.remove('correct', 'incorrect');
+            }
+            document.getElementById('feedback').classList.remove('show');
+        }
+
+        function updatePoints() {
+            document.getElementById('total-points').textContent = points;
+            if (points >= 100 && level === 1) {
+                level = 2;
+                document.getElementById('current-level').textContent = level;
+                unlockBadge(2);
+            }
+            if (points >= 250 && level === 2) {
+                level = 3;
+                document.getElementById('current-level').textContent = level;
+                unlockBadge(3);
             }
         }
 
-        window.addEventListener('load', function() {
-            loadGameState();
-            console.log('🦉 Grammar Game Loaded! Good luck!');
-        });
+        function unlockBadge(num) {
+            document.getElementById('badge-' + num).classList.add('unlocked');
+        }
 
-        document.querySelectorAll('input[type="text"]').forEach(input => {
-            input.addEventListener('focus', function() {
-                this.style.transform = 'scale(1.02)';
-                this.style.transition = 'transform 0.2s';
-            });
-            input.addEventListener('blur', function() {
-                this.style.transform = 'scale(1)';
-            });
-        });
+        function unlockNextLesson() {
+            document.getElementById('tab-there-is-are').classList.remove('locked');
+            document.getElementById('tab-there-is-are').textContent = 'There is/are';
+        }
 
-        document.querySelectorAll('input[type="radio"]').forEach(radio => {
-            radio.addEventListener('change', function() {
-                const name = this.name;
-                document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
-                    r.parentElement.classList.remove('selected');
-                });
-                this.parentElement.classList.add('selected');
-            });
-        });
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && e.target.tagName === 'INPUT') {
-                const lesson = e.target.closest('.lesson');
-                if (lesson) {
-                    const checkButton = lesson.querySelector('.btn-check');
-                    if (checkButton) checkButton.click();
-                }
+        function showLesson(id) {
+            const tab = document.getElementById('tab-' + id);
+            if (tab.classList.contains('locked')) {
+                alert('🔒 Complete previous lesson first!');
+                return;
             }
-        });
+            document.querySelectorAll('.lesson').forEach(l => l.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            tab.classList.add('active');
+        }
+
+        console.log('✅ Grammar app loaded successfully!');
     </script>
 </body>
 </html>
