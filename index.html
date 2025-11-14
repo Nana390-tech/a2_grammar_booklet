@@ -248,29 +248,6 @@
             border-radius: 5px;
         }
 
-        .table-grammar {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .table-grammar th {
-            background: #2C5F7C;
-            color: white;
-            padding: 15px;
-            text-align: left;
-        }
-
-        .table-grammar td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .table-grammar tr:nth-child(even) {
-            background: #f8f9fa;
-        }
-
         .exercise-section {
             background: white;
             border: 2px solid #FF8C42;
@@ -384,12 +361,6 @@
 
         .btn-check:hover {
             background: #1a3a4d;
-        }
-
-        .btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
         }
 
         .feedback {
@@ -574,28 +545,11 @@
         }
 
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8em;
-            }
-            
-            .content {
-                padding: 20px;
-            }
-            
-            .nav-tab {
-                min-width: 120px;
-                font-size: 12px;
-                padding: 10px 15px;
-            }
-            
-            .game-stats {
-                flex-direction: column;
-            }
-            
-            .owl-icon {
-                font-size: 40px;
-                right: 20px;
-            }
+            .header h1 { font-size: 1.8em; }
+            .content { padding: 20px; }
+            .nav-tab { min-width: 120px; font-size: 12px; padding: 10px 15px; }
+            .game-stats { flex-direction: column; }
+            .owl-icon { font-size: 40px; right: 20px; }
         }
     </style>
 </head>
@@ -647,7 +601,6 @@
         </div>
 
         <div class="content">
-            <!-- Lesson 1: Verb to Be -->
             <div id="verb-to-be" class="lesson active">
                 <h2 class="lesson-title">Lesson 1: Verb to be (Present Tense)</h2>
                 
@@ -836,7 +789,6 @@
         </div>
     </div>
 
-    <!-- Level Up Modal -->
     <div class="modal" id="level-up-modal">
         <div class="modal-content">
             <h2>🎉 Level Up!</h2>
@@ -847,7 +799,6 @@
     </div>
 
     <script>
-        // Game State
         let gameState = {
             totalPoints: 0,
             currentXP: 0,
@@ -856,7 +807,6 @@
             unlockedBadges: []
         };
 
-        // Level thresholds
         const levels = [
             { level: 1, name: 'Beginner', xpNeeded: 100, badge: '🌟' },
             { level: 2, name: 'Intermediate', xpNeeded: 250, badge: '⭐' },
@@ -864,45 +814,292 @@
             { level: 4, name: 'Master', xpNeeded: 1000, badge: '👑' }
         ];
 
-        // Load game state from localStorage
         function loadGameState() {
             const saved = localStorage.getItem('grammarGameState');
             if (saved) {
                 gameState = JSON.parse(saved);
                 updateUI();
-                
-                // Unlock completed lessons
                 gameState.completedLessons.forEach(lesson => {
                     document.getElementById('tab-' + lesson).classList.add('completed');
                     document.getElementById('tab-' + lesson).classList.remove('locked');
                 });
-                
-                // Unlock badges
                 gameState.unlockedBadges.forEach(badgeId => {
                     document.getElementById('badge-' + badgeId).classList.add('unlocked');
                 });
             }
         }
 
-        // Save game state
         function saveGameState() {
             localStorage.setItem('grammarGameState', JSON.stringify(gameState));
         }
 
-        // Update UI
         function updateUI() {
             document.getElementById('total-points').textContent = gameState.totalPoints;
             document.getElementById('xp-text').textContent = `${gameState.currentXP}/${levels[gameState.level - 1].xpNeeded} XP`;
             document.getElementById('current-level').textContent = `Level ${gameState.level}: ${levels[gameState.level - 1].name}`;
-            
             const xpPercentage = (gameState.currentXP / levels[gameState.level - 1].xpNeeded) * 100;
             document.getElementById('xp-fill').style.width = xpPercentage + '%';
         }
 
-        // Add points
         function addPoints(points) {
             gameState.totalPoints += points;
             gameState.currentXP += points;
-            
-            // Check for level up
-            if (gameState.level < levels.length && gameState.currentXP >= levels[gameState.level -
+            if (gameState.level < levels.length && gameState.currentXP >= levels[gameState.level - 1].xpNeeded) {
+                gameState.currentXP -= levels[gameState.level - 1].xpNeeded;
+                gameState.level++;
+                showLevelUpModal();
+                unlockBadge(gameState.level);
+            }
+            updateUI();
+            saveGameState();
+        }
+
+        function unlockBadge(badgeId) {
+            if (!gameState.unlockedBadges.includes(badgeId)) {
+                gameState.unlockedBadges.push(badgeId);
+                document.getElementById('badge-' + badgeId).classList.add('unlocked');
+                saveGameState();
+            }
+        }
+
+        function showLevelUpModal() {
+            const modal = document.getElementById('level-up-modal');
+            const badge = document.getElementById('modal-badge');
+            const message = document.getElementById('modal-message');
+            badge.textContent = levels[gameState.level - 1].badge;
+            message.textContent = `You reached ${levels[gameState.level - 1].name} level!`;
+            modal.classList.add('show');
+            createConfetti();
+        }
+
+        function closeModal() {
+            document.getElementById('level-up-modal').classList.remove('show');
+        }
+
+        function createConfetti() {
+            const colors = ['#FF8C42', '#FF6B35', '#4CAF50', '#2
+                            196F3', '#FFD700'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'fixed';
+                    confetti.style.width = '10px';
+                    confetti.style.height = '10px';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-10px';
+                    confetti.style.opacity = '1';
+                    confetti.style.animation = 'confetti-fall 3s linear';
+                    document.body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        }
+
+        function showLesson(lessonId) {
+            const tab = document.getElementById('tab-' + lessonId);
+            if (tab.classList.contains('locked')) {
+                alert('🔒 Complete the previous lesson to unlock this one!');
+                return;
+            }
+            const lessons = document.querySelectorAll('.lesson');
+            lessons.forEach(lesson => lesson.classList.remove('active'));
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            document.getElementById(lessonId).classList.add('active');
+            tab.classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function resetExercise(lessonId) {
+            const inputs = document.querySelectorAll(`#${lessonId} input[type="text"]`);
+            inputs.forEach(input => {
+                input.value = '';
+                input.classList.remove('correct', 'incorrect');
+            });
+            const radios = document.querySelectorAll(`#${lessonId} input[type="radio"]`);
+            radios.forEach(radio => radio.checked = false);
+            const feedback = document.getElementById(`feedback-${lessonId}`);
+            if (feedback) {
+                feedback.classList.remove('show', 'correct', 'incorrect');
+                feedback.textContent = '';
+            }
+            const progress = document.getElementById(`progress-${lessonId}`);
+            if (progress) {
+                progress.style.width = '0%';
+                progress.textContent = '0%';
+            }
+        }
+
+        function checkAnswer(input, correctAnswers) {
+            const userAnswer = input.value.trim().toLowerCase();
+            const isCorrect = correctAnswers.some(answer => 
+                userAnswer === answer.toLowerCase() || 
+                userAnswer.replace(/'/g, '') === answer.toLowerCase().replace(/'/g, '')
+            );
+            if (isCorrect) {
+                input.classList.add('correct');
+                input.classList.remove('incorrect');
+            } else {
+                input.classList.add('incorrect');
+                input.classList.remove('correct');
+            }
+            return isCorrect;
+        }
+
+        function showFeedback(lessonId, correct, total, pointsPerQuestion = 10) {
+            const feedback = document.getElementById(`feedback-${lessonId}`);
+            const percentage = Math.round((correct / total) * 100);
+            const pointsEarned = correct * pointsPerQuestion;
+            feedback.classList.add('show');
+            if (percentage === 100) {
+                feedback.classList.add('correct');
+                feedback.classList.remove('incorrect');
+                feedback.innerHTML = `🎉 Perfect! You got all ${total} questions correct! <span class="points-earned">+${pointsEarned} points</span>`;
+                addPoints(pointsEarned);
+            } else if (percentage >= 60) {
+                feedback.classList.add('correct');
+                feedback.classList.remove('incorrect');
+                feedback.innerHTML = `✅ Good job! You got ${correct} out of ${total} correct. <span class="points-earned">+${pointsEarned} points</span>`;
+                addPoints(pointsEarned);
+            } else {
+                feedback.classList.add('incorrect');
+                feedback.classList.remove('correct');
+                feedback.innerHTML = `📚 You got ${correct} out of ${total} correct. Review the lesson and try again!`;
+            }
+            const progress = document.getElementById(`progress-${lessonId}`);
+            if (progress) {
+                progress.style.width = percentage + '%';
+                progress.textContent = percentage + '%';
+            }
+        }
+
+        function checkVerbToBe() {
+            let correct = 0;
+            const total = 5;
+            const answers = [
+                { id: 'q1-1', correct: ['am'] },
+                { id: 'q1-2', correct: ['is'] },
+                { id: 'q1-3', correct: ['are not', 'aren\'t', 'arent'] },
+                { id: 'q1-4', correct: ['are'] },
+                { id: 'q1-5', correct: ['is not', 'isn\'t', 'isnt'] }
+            ];
+            answers.forEach(answer => {
+                const input = document.getElementById(answer.id);
+                if (checkAnswer(input, answer.correct)) {
+                    correct++;
+                }
+            });
+            showFeedback('verb-to-be', correct, total);
+        }
+
+        function checkMCQ(lessonId) {
+            let correct = 0;
+            const total = 5;
+            const correctAnswers = {
+                'verb-to-be': ['c', 'a', 'b', 'a', 'b']
+            };
+            const answers = correctAnswers[lessonId];
+            for (let i = 1; i <= total; i++) {
+                const selected = document.querySelector(`input[name="mcq1-${i}"]:checked`);
+                const options = document.querySelectorAll(`input[name="mcq1-${i}"]`);
+                options.forEach(option => {
+                    option.parentElement.classList.remove('correct', 'incorrect', 'selected');
+                });
+                if (selected) {
+                    selected.parentElement.classList.add('selected');
+                    if (selected.value === answers[i - 1]) {
+                        selected.parentElement.classList.add('correct');
+                        correct++;
+                    } else {
+                        selected.parentElement.classList.add('incorrect');
+                        options.forEach(option => {
+                            if (option.value === answers[i - 1]) {
+                                option.parentElement.classList.add('correct');
+                            }
+                        });
+                    }
+                }
+            }
+            const feedback = document.getElementById(`feedback-mcq-${lessonId}`);
+            const percentage = Math.round((correct / total) * 100);
+            const pointsEarned = correct * 20;
+            feedback.classList.add('show');
+            if (percentage >= 80) {
+                feedback.classList.add('correct');
+                feedback.classList.remove('incorrect');
+                feedback.innerHTML = `🎉 Excellent! You scored ${percentage}%! <span class="points-earned">+${pointsEarned} points</span><br>Next lesson unlocked! 🎊`;
+                addPoints(pointsEarned);
+                if (!gameState.completedLessons.includes(lessonId)) {
+                    gameState.completedLessons.push(lessonId);
+                    saveGameState();
+                }
+                unlockNextLesson(lessonId);
+                if (gameState.unlockedBadges.length === 0) {
+                    unlockBadge(1);
+                }
+            } else if (percentage >= 60) {
+                feedback.classList.add('correct');
+                feedback.classList.remove('incorrect');
+                feedback.innerHTML = `✅ Good! You scored ${percentage}%! <span class="points-earned">+${pointsEarned} points</span><br>Next lesson unlocked!`;
+                addPoints(pointsEarned);
+                if (!gameState.completedLessons.includes(lessonId)) {
+                    gameState.completedLessons.push(lessonId);
+                    saveGameState();
+                }
+                unlockNextLesson(lessonId);
+            } else {
+                feedback.classList.add('incorrect');
+                feedback.classList.remove('correct');
+                feedback.innerHTML = `📚 You scored ${percentage}%. You need at least 60% to unlock the next lesson. Review and try again!`;
+            }
+        }
+
+        function unlockNextLesson(currentLesson) {
+            const lessonOrder = ['verb-to-be', 'there-is-are', 'prepositions'];
+            const currentIndex = lessonOrder.indexOf(currentLesson);
+            if (currentIndex < lessonOrder.length - 1) {
+                const nextLesson = lessonOrder[currentIndex + 1];
+                const nextTab = document.getElementById('tab-' + nextLesson);
+                nextTab.classList.remove('locked');
+                document.getElementById('tab-' + currentLesson).classList.add('completed');
+            }
+        }
+
+        window.addEventListener('load', function() {
+            loadGameState();
+            console.log('🦉 Grammar Game Loaded! Good luck!');
+        });
+
+        document.querySelectorAll('input[type="text"]').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.transform = 'scale(1.02)';
+                this.style.transition = 'transform 0.2s';
+            });
+            input.addEventListener('blur', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const name = this.name;
+                document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
+                    r.parentElement.classList.remove('selected');
+                });
+                this.parentElement.classList.add('selected');
+            });
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.target.tagName === 'INPUT') {
+                const lesson = e.target.closest('.lesson');
+                if (lesson) {
+                    const checkButton = lesson.querySelector('.btn-check');
+                    if (checkButton) checkButton.click();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
