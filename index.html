@@ -59,7 +59,6 @@
             50% { transform: translateY(-10px); }
         }
 
-        /* Gamification Header */
         .game-stats {
             background: #2C5F7C;
             color: white;
@@ -490,7 +489,6 @@
             color: #FF8C42;
         }
 
-        /* MCQ Review Section */
         .mcq-review {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -526,7 +524,6 @@
             margin-right: 10px;
         }
 
-        /* Level Up Modal */
         .modal {
             display: none;
             position: fixed;
@@ -576,22 +573,6 @@
             to { transform: rotate(360deg); }
         }
 
-        .confetti {
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background: #FF8C42;
-            position: absolute;
-            animation: confetti-fall 3s linear;
-        }
-
-        @keyframes confetti-fall {
-            to {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 1.8em;
@@ -627,7 +608,6 @@
             <div class="owl-icon">🦉</div>
         </div>
 
-        <!-- Gamification Stats -->
         <div class="game-stats">
             <div class="stat-box">
                 <div class="stat-icon">⭐</div>
@@ -727,7 +707,6 @@
                     </div>
                 </div>
 
-                <!-- Practice Exercise -->
                 <div class="exercise-section">
                     <div class="exercise-title">📝 Practice Exercise</div>
                     
@@ -766,7 +745,6 @@
                     </div>
                 </div>
 
-                <!-- MCQ Review -->
                 <div class="mcq-review" id="mcq-verb-to-be">
                     <h3>🎯 Unit Review - Multiple Choice Quiz</h3>
                     <p style="text-align: center; margin-bottom: 20px;">Complete this quiz to unlock the next lesson!</p>
@@ -855,42 +833,76 @@
                     <div class="feedback" id="feedback-mcq-verb-to-be"></div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- Lesson 2: There is/are -->
-            <div id="there-is-are" class="lesson">
-                <h2 class="lesson-title">Lesson 2: There is / There are</h2>
+    <!-- Level Up Modal -->
+    <div class="modal" id="level-up-modal">
+        <div class="modal-content">
+            <h2>🎉 Level Up!</h2>
+            <div class="badge-large" id="modal-badge">⭐</div>
+            <p id="modal-message" style="font-size: 1.5em; margin: 20px 0;"></p>
+            <button class="btn" onclick="closeModal()">Continue</button>
+        </div>
+    </div>
+
+    <script>
+        // Game State
+        let gameState = {
+            totalPoints: 0,
+            currentXP: 0,
+            level: 1,
+            completedLessons: [],
+            unlockedBadges: []
+        };
+
+        // Level thresholds
+        const levels = [
+            { level: 1, name: 'Beginner', xpNeeded: 100, badge: '🌟' },
+            { level: 2, name: 'Intermediate', xpNeeded: 250, badge: '⭐' },
+            { level: 3, name: 'Advanced', xpNeeded: 500, badge: '🏆' },
+            { level: 4, name: 'Master', xpNeeded: 1000, badge: '👑' }
+        ];
+
+        // Load game state from localStorage
+        function loadGameState() {
+            const saved = localStorage.getItem('grammarGameState');
+            if (saved) {
+                gameState = JSON.parse(saved);
+                updateUI();
                 
-                <div class="grammar-box">
-                    <h3>📌 Positive Form</h3>
-                    <p>Use <strong>There is</strong> for singular nouns (one thing)</p>
-                    <p>Use <strong>There are</strong> for plural nouns (two or more things)</p>
+                // Unlock completed lessons
+                gameState.completedLessons.forEach(lesson => {
+                    document.getElementById('tab-' + lesson).classList.add('completed');
+                    document.getElementById('tab-' + lesson).classList.remove('locked');
+                });
+                
+                // Unlock badges
+                gameState.unlockedBadges.forEach(badgeId => {
+                    document.getElementById('badge-' + badgeId).classList.add('unlocked');
+                });
+            }
+        }
 
-                    <div class="example-box">
-                        <strong>Examples:</strong><br>
-                        • <span class="highlight">There is</span> a book on the table.<br>
-                        • <span class="highlight">There are</span> three students in the class.
-                    </div>
-                </div>
+        // Save game state
+        function saveGameState() {
+            localStorage.setItem('grammarGameState', JSON.stringify(gameState));
+        }
 
-                <div class="grammar-box">
-                    <h3>❌ Negative Form</h3>
-                    <ul style="margin-left: 20px; margin-top: 10px;">
-                        <li>There <strong>is not</strong> (isn't) any...</li>
-                        <li>There <strong>are not</strong> (aren't) any...</li>
-                    </ul>
+        // Update UI
+        function updateUI() {
+            document.getElementById('total-points').textContent = gameState.totalPoints;
+            document.getElementById('xp-text').textContent = `${gameState.currentXP}/${levels[gameState.level - 1].xpNeeded} XP`;
+            document.getElementById('current-level').textContent = `Level ${gameState.level}: ${levels[gameState.level - 1].name}`;
+            
+            const xpPercentage = (gameState.currentXP / levels[gameState.level - 1].xpNeeded) * 100;
+            document.getElementById('xp-fill').style.width = xpPercentage + '%';
+        }
 
-                    <div class="example-box">
-                        <strong>Examples:</strong><br>
-                        • <span class="highlight">There isn't</span> a pen in my bag.<br>
-                        • <span class="highlight">There aren't</span> any apples in the basket.
-                    </div>
-                </div>
-
-                <div class="grammar-box">
-                    <h3>❓ Question Form</h3>
-                    
-                    <div class="example-box">
-                        <strong>Examples:</strong><br>
-                        • <span class="highlight">Is there</span> a cat under the table?<br>
-                        • <span class="highlight">Are there</span> any books on the shelf?<br><br>
-                        <strong>Answers:</strong> Yes, there
+        // Add points
+        function addPoints(points) {
+            gameState.totalPoints += points;
+            gameState.currentXP += points;
+            
+            // Check for level up
+            if (gameState.level < levels.length && gameState.currentXP >= levels[gameState.level -
